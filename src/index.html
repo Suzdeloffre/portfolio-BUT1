@@ -7,7 +7,7 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 		<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
-		<script src="script.js"></script>
+		<script src="script.js" defer></script>
 	</head>
 
 <body class="min-h-screen bg-gradient-to-b from-indigo-400 to-pink-400 text-white">
@@ -40,13 +40,12 @@
 			<p class="mt-4 text-lg drop-shadow-md">{{ welcomeText }}</p>
 		  </div>
     </section>
+
 	<!--Grimoire-->
-	<canvas id="grimoire"></canvas>
-	<section class="px-4 py-10" id="grimoire">
+	<section class="px-4 py-10" >
 		<h2 class="text-2xl font-semibold">Mon Grimoire</h2>
 		<p class="mb-2 text-white/80">Clique sur la page pour la tourner !</p>
-		<div ref="threeContainer" style="width: 600px; height: 400px;"></div>
-	  </section>
+		<canvas id="grimoire" style="  margin: auto;"></canvas></section>
 
     <!-- À propos -->
     <section class="px-4 py-10" id="about">
@@ -69,15 +68,17 @@
     </section>
 
     <!-- Projets -->
-    <section class="px-4 py-10" id="projects">
-      <h2 class="text-2xl font-semibold">Découvrez mon travail !</h2>
-      <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div v-for="(project, index) in projects" :key="index" class="bg-white bg-opacity-10 p-4 rounded-lg shadow">
-          <h3 class="text-lg font-semibold">{{ project.title }}</h3>
-          <p>{{ project.image }}</p>
-        </div>
-      </div>
-    </section>
+	<section class="px-4 py-10" id="projects" style="position: relative;">
+		<h2 class="text-2xl font-semibold">Découvrez mon travail !</h2>
+		<canvas id="stars" style="display: block; margin: 2rem auto;"></canvas>
+  
+		<div v-if="hoveredProject" 
+			 class="absolute bg-white bg-opacity-90 text-black p-4 rounded shadow-lg"
+			 style="top: 10px; left: 50%; transform: translateX(-50%); max-width: 350px; z-index: 10; pointer-events: none;">
+		  <h3 class="font-bold text-lg mb-2">{{ hoveredProject.title }}</h3>
+		  <p>{{ hoveredProject.description }}</p>
+		</div>
+	  </section>
 
     <footer class="bg-white bg-opacity-10 text-center py-4 mt-10">
       <p>ici le footer</p>
@@ -86,4 +87,5 @@
 
 
 </body>
+
 </html>
