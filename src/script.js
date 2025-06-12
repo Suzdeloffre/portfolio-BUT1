@@ -11,20 +11,39 @@ createApp({
 		],
 		"welcomeTitle": "Bienvenue sur mon portfolio, ",
 		"welcomeText": "l'univers numérique d'une étudiante en première année de BUT informatique",
-		"aboutText": "Dans ce monde numérique en constante évolution, je trouve ma voie entre créativité et logique.\n\nChaque ligne de code est une incantation, chaque projet une quête à accomplir.",
+		"aboutText": "Ma trajectoire n’a rien de linéaire : c’est une quête initiatique, un passage à l’âge adulte aussi tumultueux qu’enrichissant. Mon aventure a commencé dans la grande ville animée de Lyon, où j’ai entamé des études de management et d’économie. Puis, un retour aux sources s’est imposé — vers mes passions profondes : la culture et la littérature.\n\nC’est là que j’ai croisé la route de Balzac, dont le style dense et presque soporifique fut un véritable défi. Pourtant, cette plongée dans la complexité littéraire m’a apporté patience, rigueur et sens de l’analyse.\n\nMais la quête ne s’est pas arrêtée là. Elle m’a emportée dans l’univers intense de l’hôtellerie-restauration de luxe, une autre école de vie où adaptabilité et discipline sont de mise. J’y ai obtenu mon diplôme au Cours Hôtelier de Besançon.\n\nUne quête secondaire m’a ensuite menée dans un lieu inattendu mais déterminant : le Centre d’Information et d’Orientation de Besançon. Recueillie par sa directrice, j’y ai passé près d’un an à moderniser l’interface informatique des ordinateurs mis à disposition du public, tout en assurant des missions d’accueil et de secrétariat. Ces responsabilités m’ont permis de me reconnecter à une part essentielle de moi-même.\n\nChaque adversité, chaque rencontre, chaque détour m’a permis de collecter les pièces d’un puzzle — et toutes pointaient dans la même direction : l’informatique.\n\nAujourd’hui, dans ce monde numérique en perpétuelle mutation, je trace ma route à la croisée de la créativité et de la logique. Chaque ligne de code est une incantation, chaque projet une quête à accomplir.",
 		"softSkills": "✨ Travail d'équipe • Créativité • Adaptabilité • Curiosité ✨",
 		"skills": [
 			{
 				"title": "🌐 Développement",
-				"items": ["Java","HTML", "CSS", "JavaScript", "Python", "C"]
+				"items": [
+					{name:"Java",level : 80},
+					{name:"HTML",level : 90},
+					{name:"CSS",level : 70},
+					{name:"JavaScript",level : 45},
+					{name:"Python",level : 30},
+					{name:"C",level : 40}
+				]
 			},
 			{
 				"title": "⚡ Frameworks",
-				"items": ["Flask", "Vue.js", "Bootstrap", "Tailwind CSS"]
+				"items":  [
+					{name:"Flask",level : 70},
+					{name:"Vue.js",level : 40},
+					{name:"Bootstrap",level : 70},
+					{name:"Tailwind CSS",level : 45}
+					
+				]
 			},
 			{
 				"title": "🛠️ Outils",
-				"items": ["GitLab & GitHub", "VS Code", "Figma", "JetBrains"]
+				"items":  [
+					{name:"GitLab & GitHub",level : 70},
+					{name:"VS Code",level : 60},
+					{name:"JetBrains",level : 60},
+					{name:"Figma",level : 45}
+				]
+				
 			}
 		],
 		"projects": [
@@ -127,15 +146,7 @@ createApp({
 				"url": "https://github.com"
 			}
 		],
-		"starPositions": [
-			{ "left": 90, "top": 90 },
-			{ "left": 270, "top": 200 },
-			{ "left": 450, "top": 120 },
-			{ "left": 670, "top": 90 },
-			{ "left": 800, "top": 190 },
-			{ "left": 150, "top": 300 },
-			{ "left": 550, "top": 270 }
-		],
+		
 		hoveredProject: null,
         tooltipX: 0,
         tooltipY: 0,
@@ -154,6 +165,9 @@ createApp({
 	closeProjectModal() {
 	  this.showProjectModal = false;
 	  this.selectedProject = null;
+	},
+	openInNewTab(url) {
+		window.open(url, '_blank');
 	},
 
 	updateTooltipPosition(event) {

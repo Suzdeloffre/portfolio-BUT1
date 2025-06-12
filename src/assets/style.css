@@ -6,7 +6,7 @@
 	text-align: center;         
 	color: #ffffff;            
 	display: flex;
-	align-items: center;     
+	align-content: center;     
 	justify-content: center
 
 }
@@ -42,9 +42,9 @@
 }
 
 .star {
-	position: absolute;
-	width: 65px;
-	height: 65px;
+	display: flex;
+	width: 90px;
+	height: 90px;
 	background: radial-gradient(circle, #fff 0%, #ffd700 50%, #ff6b35 100%);
 	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 	filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
@@ -56,6 +56,9 @@
 .floating-star {
 	animation: float-star 6s ease-in-out infinite, twinkle 6s ease-in-out infinite;
 }
+.star-with-images {
+	background: radial-gradient(circle, #f3d8d8, rgb(255, 51, 0) 50%, #ff6b35 100%);
+  }
 
 .star:hover {
 	transform: scale(1.4);
@@ -88,6 +91,21 @@
 	filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.9));
 	}
 }
+.group:hover .bg-gradient-to-r {
+	animation: fillBar 1s ease-out forwards;
+  }
+  
+@keyframes fillBar {
+	from { width: 0%; }
+	to { width: var(--target-width); }
+}
 
+.progress-bar {
+transition: width 1s ease-out;
+}
+
+.group:hover .progress-bar {
+width: var(--target-width) !important;
+}
 
 
