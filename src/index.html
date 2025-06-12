@@ -1,24 +1,18 @@
-pourquoi tout est devenu noir ?
-Modifier
-
-Je vois le problème ! Le conteneur des étoiles (#star-container) a un position: fixed qui couvre toute la page avec un fond noir, ce qui masque tout le contenu en dessous.
-
-Voici les corrections à apporter :
-
-Continuer
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Suzanne Deloffre</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="./script.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body class="min-h-screen bg-gradient-to-b from-indigo-400 to-pink-400 text-white">
   <div id="app" class="font-sans">
+   
     <!-- NAVBAR -->
     <header>
       <nav class="w-full bg-white bg-opacity-10 backdrop-blur-md shadow-lg fixed top-0 left-0 z-50">
@@ -48,27 +42,32 @@ Continuer
         </div>
     </section>
 
-    <!-- Grimoire -->
+    <div class="m-6 p-6">
+    <!-- A propos -->
     <section class="px-4 py-10" id="about">
-      <div class="flex justify-center mb-6">
+      <div class="flex justify-start mb-8 ml-16">
         <div class="cloud-title">
-          <h2 class="text-3xl font-semibold text-center text-white">{{ grimoireOpen ? 'Mon Histoire' : 'Apprenez à me connaître !' }}</h2>
+          <h2 class="title">Apprenez à me connaître !</h2>
         </div>
       </div>
-      <p v-if="!grimoireOpen" class="mb-4 text-white/80 text-center">✨ Cliquez sur le grimoire magique pour découvrir mon histoire ! ✨</p>
-      <div class="flex justify-center">
-          <canvas id="grimoire" class="cursor-pointer"></canvas>
+      <div class="mt-16 max-w-4xl mx-auto">
+        <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+          <p class="text-lg leading-relaxed mb-4">{{ aboutText }}</p>
+          <div class="mt-6 text-center">
+            <p class="text-xl font-medium text-yellow-200">{{ softSkills }}</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Compétences -->
     <section class="px-4 py-10" id="skills">
-      <div class="flex justify-center mb-6">
+      <div class="flex justify-start mb-8 ml-16">
         <div class="cloud-title">
-          <h2 class="text-3xl font-semibold text-center text-white">Voici mes compétences !</h2>
+          <h2 class="title">Voici mes compétences !</h2>
         </div>
       </div>
-      <div class="mt-4 grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <div class="mt-16 grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         <div v-for="(skillBlock, index) in skills" :key="index" class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
           <div class="flex justify-center mb-3">
             <div class="cloud-subtitle">
@@ -85,32 +84,36 @@ Continuer
       </div>
     </section>
 
-    <!-- Projets -->
-    <section class="px-4 py-10 relative" id="projects">
-        <div class="flex justify-center mb-6">
+     <!-- Projets -->
+      <section class="px-4 py-10 relative" id="projects">
+        <div class="flex justify-start mb-8 ml-16">
           <div class="cloud-title">
-            <h2 class="text-3xl font-semibold text-center text-white">Découvrez mon travail !</h2>
+            <h2 class="title">Découvrez mon travail !</h2>
           </div>
         </div>
-        <p class="text-white/80 text-center mb-4">🌟 Survolez les étoiles flottantes pour découvrir mes projets ! 🌟</p>
+        <p class="text-white/80 text-center mt-14">🌟 Survolez les étoiles flottantes pour découvrir mes projets ! 🌟</p>
         
-        <div class="relative mx-auto" style="height: 400px; max-width: 1000px;">
-          <div id="star-container" class="absolute inset-0 overflow-hidden rounded-lg" style="background: radial-gradient(circle at center, rgba(10, 10, 31, 0.8), rgba(0, 0, 20, 0.9));">
+        <div class="relative mx-auto align-items-center" style="height: 400px; max-width: 70%;">
+          <div id="star-container">
             <div v-for="(project, index) in projects" 
-                 :key="index"
-                 class="star"
-                 @mouseover="hoveredProject = project; updateTooltipPosition($event)"
-                 @mouseleave="hoveredProject = null"
-                 @click="openProjectModal(project)"
-                 :style="{ left: Math.random() * 80 + '%', top: Math.random() * 80 + '%' }">
+                :key="index"
+                class="star floating-star"
+                @mouseover="hoveredProject = project; updateTooltipPosition($event)"
+                @mouseleave="hoveredProject = null"
+                @click="openProjectModal(project)"
+                :style="{ 
+                  left: starPositions[index]?.left + 'px', 
+                  top: starPositions[index]?.top + 'px',
+                  animationDelay: index * 0.5 + 's'
+                }">
             </div>
           </div>
         </div>
         
         <!-- Infobulle projet -->
         <div v-if="hoveredProject" 
-             class="fixed bg-white bg-opacity-95 text-black p-4 rounded-lg shadow-xl pointer-events-none z-50 max-w-sm"
-             :style="{ left: tooltipX + 'px', top: tooltipY + 'px' }">
+            class="fixed bg-white bg-opacity-95 text-black p-4 rounded-lg shadow-xl pointer-events-none z-50 max-w-sm"
+            :style="{ left: tooltipX + 'px', top: tooltipY + 'px' }">
           <h3 class="font-bold text-lg mb-2">{{ hoveredProject.title }}</h3>
           <p class="text-sm mb-3">{{ hoveredProject.description }}</p>
           <div class="flex flex-wrap gap-1 mb-2">
@@ -122,12 +125,17 @@ Continuer
         
         <!-- Modal Projet -->
         <div v-if="showProjectModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeProjectModal">
-          <div class="bg-white rounded-lg p-6 max-w-2xl mx-4 max-h-[80vh] overflow-y-auto" @click.stop>
+          <div class="bg-white rounded-2xl p-8 w-[95vw] h-[90vh] overflow-y-auto shadow-xl" @click.stop>
             <div class="flex justify-between items-start mb-4">
               <h2 class="text-2xl font-bold text-gray-800">{{ selectedProject?.title }}</h2>
               <button @click="closeProjectModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
             </div>
-            
+
+            <div v-if="selectedProject?.date" class="mb-4">
+              <h3 class="font-semibold mb-2">Date :</h3>
+              <p class="text-gray-700">{{ selectedProject.date }}</p>
+            </div>
+
             <div class="space-y-4 text-gray-700">
               <p class="text-lg">{{ selectedProject?.description }}</p>
               
@@ -138,594 +146,63 @@ Continuer
                         class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm">{{ tech }}</span>
                 </div>
               </div>
+
+              <div v-if="selectedProject?.competence">
+                <h3 class="font-semibold mb-2">Compétences :</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span v-for="comp in selectedProject.competence" :key="comp" 
+                        class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">{{ comp }}</span>
+                </div>
+              </div>
               
               <div>
                 <h3 class="font-semibold mb-2">Détails du projet :</h3>
-                <p>{{ selectedProject?.longDescription || 'Description détaillée à venir...' }}</p>
+                <!-- Si c'est un tableau -->
+                <div v-if="Array.isArray(selectedProject?.longDescription)">
+                  <p v-for="(paragraph, index) in selectedProject.longDescription" :key="index" class="mb-3">
+                    {{ paragraph }}
+                  </p>
+                </div>
+                <!-- Si c'est un string -->
+                <div v-else>
+                  <p v-for="(paragraph, index) in selectedProject?.longDescription?.split('\n\n')" :key="index" class="mb-3">
+                    {{ paragraph }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Images du projet -->
+              <div v-if="selectedProject?.images && selectedProject.images.length > 0" class="mt-6">
+                <h3 class="font-semibold mb-4">Explication du projet :</h3>
+                <div class="space-y-6">
+                  <div v-for="(image, index) in selectedProject.images" :key="index" class="border rounded-lg p-4 bg-gray-50">
+                    <img :src="image.src" :alt="image.alt" class="w-full max-w-2xl mx-auto rounded-lg shadow-md mb-3">
+                    <h4 class="font-medium text-gray-600 mb-2">{{ image.caption }}</h4>
+                    <p class="text-m text-gray-700">{{ image.description }}</p>
+                  </div>
+                </div>
               </div>
               
               <div class="flex gap-3 pt-4">
                 <button v-if="selectedProject?.url" 
                         @click="window.open(selectedProject.url, '_blank')"
                         class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded transition">
-                  Voir le code
+                  🔗 Voir le code
                 </button>
                 <button v-if="selectedProject?.demo" 
                         @click="window.open(selectedProject.demo, '_blank')"
                         class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition">
-                  Voir la démo
+                  🚀 Voir la démo
                 </button>
               </div>
             </div>
           </div>
         </div>
-    </section>
-
-    <footer class="bg-white bg-opacity-10 text-center py-4 mt-10">
-      <p>✨ Portfolio créé avec amour et magie ✨</p>
-    </footer>
-  </div>
-
-  <script>
-    const { createApp } = Vue;
-
-    createApp({
-      data() {
-        return {
-          name: "Suzanne Deloffre",
-          navItems: [
-            { label: "A propos", link: "#about" },
-            { label: "Compétences", link: "#skills" },
-            { label: "Projets", link: "#projects" },
-          ],
-          welcomeTitle: "Bienvenue sur mon portfolio, ",
-          welcomeText: "l'univers numérique d'une étudiante en première année de BUT informatique",
-          aboutText: "Dans ce monde numérique en constante évolution, je trouve ma voie entre créativité et logique.\n\nChaque ligne de code est une incantation, chaque projet une quête à accomplir.",
-          softSkills: "✨ Travail d'équipe • Créativité • Adaptabilité • Curiosité ✨",
-          skills: [
-            { title: "🌐 Développement Web", items: ["HTML", "CSS", "JavaScript", "Java", "Python", "C"] },
-            { title: "⚡ Frameworks", items: ["Flask", "Vue.js", "Bootstrap", "Tailwind CSS", "Three.js"] },
-            { title: "🛠️ Outils", items: ["GitLab & GitHub", "VS Code", "Figma", "JetBrains"] }
-          ],
-          projects: [
-            { 
-              title: "Site de présentation d'Alten", 
-              description: "Ceci est mon premier site internet responsive, réalisé en entre septembre et novembre 2024",
-              technologies: ["HTML", "CSS", "GitHub"],
-              longDescription : "ici la longue desciption",
-              url: "https://github.com"
-            },
-            { 
-              title: "Site E-commerce", 
-              description: "Boutique de vente de casque en ligne pour une entreprise fictive. Le back-end est séparé en deux parties : client et administrateur. Avec la gestion des stock, des commandes, des adresses, des commandaires.",
-              technologies: ["HTML5", "JavaScript", "Bootstrap"],
-              longDescription : "ici la longue desciption",
-              url: "https://github.com"
-            },
-            { 
-              title: "Portfolio ", 
-              description: "Portfolio interactif utilisant Three.js pour créer des expériences immersives.",
-              technologies: ["Three.js", "Vue.js", "HTML", "Tailwind CSS"],
-              longDescription : "ici la longue desciption",
-              url: "https://github.com"
-            },
-            { 
-              title: "Pauvocoder", 
-              description: "Vocoder simple",
-              technologies: ["Java"],
-              longDescription : "ici la longue desciption",
-              url: "https://github.com"
-            },
-            { 
-              title: "Quixo", 
-              description: "Jeu de plateau développé en Java avec une interface graphique créée par le framework Boardifier",
-              technologies: ["Java"],
-              longDescription : "ici la longue desciption",
-              url: "https://github.com"
-            }
-          ],
-          hoveredProject: null,
-          hoveredIndex: null,
-          tooltipX: 0,
-          tooltipY: 0,
-          grimoireOpen: false,
-          isPageTurning: false,
-          showProjectModal: false,
-          selectedProject: null
-        };
-      },
-
-      mounted() {
-        this.initGrimoire();
-        this.initStars();
-      },
-
-      methods: {
-        openProjectModal(project) {
-          this.selectedProject = project;
-          this.showProjectModal = true;
-        },
-
-        closeProjectModal() {
-          this.showProjectModal = false;
-          this.selectedProject = null;
-        },
-
-        initGrimoire() {
-          const canvas = document.getElementById('grimoire');
-          canvas.width = 1200;
-          canvas.height = 900;
-          
-          const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-          renderer.setSize(1200, 900);
-          renderer.shadowMap.enabled = true;
-          renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-          const scene = new THREE.Scene();
-          const camera = new THREE.PerspectiveCamera(75, 1200 / 900, 0.1, 1000);
-          camera.position.set(0, 2, 6);
-          camera.lookAt(0, 0, 0);
-
-          // Éclairage ambiant
-          const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
-          scene.add(ambientLight);
-
-          // Lumière principale
-          const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-          directionalLight.position.set(5, 5, 5);
-          directionalLight.castShadow = true;
-          scene.add(directionalLight);
-
-          // Lumière magique pour l'effet brillant
-          const magicLight = new THREE.PointLight(0xffd700, 1, 10);
-          magicLight.position.set(0, 2, 2);
-          scene.add(magicLight);
-
-          // Texture du grimoire
-          const loader = new THREE.TextureLoader();
-          
-         // Couverture du grimoire avec texture
-         const coverGeometry = new THREE.BoxGeometry(3.2, 4.5, 0.3);
-          
-          // Créer une texture de cuir marron pour le dos
-          const leatherCanvas = document.createElement('canvas');
-          leatherCanvas.width = 512;
-          leatherCanvas.height = 512;
-          const leatherCtx = leatherCanvas.getContext('2d');
-          
-          // Texture cuir marron
-          const leatherGradient = leatherCtx.createLinearGradient(0, 0, 0, 512);
-          leatherGradient.addColorStop(0, '#8B4513');
-          leatherGradient.addColorStop(0.3, '#654321');
-          leatherGradient.addColorStop(0.7, '#4A2C17');
-          leatherGradient.addColorStop(1, '#2F1B14');
-          leatherCtx.fillStyle = leatherGradient;
-          leatherCtx.fillRect(0, 0, 512, 512);
-          
-          // Ajouter une texture de cuir avec des lignes
-          leatherCtx.strokeStyle = '#3D2317';
-          leatherCtx.lineWidth = 2;
-          for(let i = 0; i < 20; i++) {
-            const y = Math.random() * 512;
-            leatherCtx.beginPath();
-            leatherCtx.moveTo(0, y);
-            leatherCtx.lineTo(512, y + Math.random() * 20 - 10);
-            leatherCtx.stroke();
-          }
-          
-          const leatherTexture = new THREE.CanvasTexture(leatherCanvas);
-          
-          // Créer une texture par défaut pour la couverture en attendant le chargement
-          const defaultCanvas = document.createElement('canvas');
-          defaultCanvas.width = 512;
-          defaultCanvas.height = 512;
-          const defaultCtx = defaultCanvas.getContext('2d');
-          
-          // Texture de base avec style grimoire
-          const gradient = defaultCtx.createLinearGradient(0, 0, 0, 512);
-          gradient.addColorStop(0, '#8B4513');
-          gradient.addColorStop(0.5, '#654321');
-          gradient.addColorStop(1, '#4A2C17');
-          defaultCtx.fillStyle = gradient;
-          defaultCtx.fillRect(0, 0, 512, 512);
-          
-          // Bordures dorées
-          defaultCtx.strokeStyle = '#FFD700';
-          defaultCtx.lineWidth = 8;
-          defaultCtx.strokeRect(20, 20, 472, 472);
-          
-          // Motifs décoratifs
-          defaultCtx.fillStyle = '#FFD700';
-          defaultCtx.font = 'bold 48px serif';
-          defaultCtx.textAlign = 'center';
-          defaultCtx.fillText('✦', 256, 100);
-          defaultCtx.fillText('GRIMOIRE', 256, 256);
-          defaultCtx.fillText('✦', 256, 400);
-          
-          const defaultTexture = new THREE.CanvasTexture(defaultCanvas);
-          
-          // Créer les matériaux pour chaque face
-          const coverMaterials = [
-            new THREE.MeshPhongMaterial({ map: leatherTexture, shininess: 20 }), // droite
-            new THREE.MeshPhongMaterial({ map: leatherTexture, shininess: 20 }), // gauche
-            new THREE.MeshPhongMaterial({ map: leatherTexture, shininess: 20 }), // haut
-            new THREE.MeshPhongMaterial({ map: leatherTexture, shininess: 20 }), // bas
-            new THREE.MeshPhongMaterial({ map: defaultTexture, shininess: 30 }), // devant (couverture)
-            new THREE.MeshPhongMaterial({ map: leatherTexture, shininess: 20 })  // derrière
-          ];
-
-          // Essayer de charger l'image du grimoire pour la couverture
-          loader.load(
-            './assets/images/grimoire.jpeg',
-            (texture) => {
-              texture.colorSpace = THREE.SRGBColorSpace;
-              coverMaterials[4].map = texture; // Face avant uniquement
-              coverMaterials[4].needsUpdate = true;
-            },
-            undefined,
-            (error) => {
-              console.log('Image grimoire non trouvée, utilisation de la texture par défaut');
-            }
-          );
-
-          const cover = new THREE.Mesh(coverGeometry, coverMaterials);
-          cover.castShadow = true;
-          cover.receiveShadow = true;
-          scene.add(cover);
-
-          // Effet de particules magiques
-          const particlesGeometry = new THREE.BufferGeometry();
-          const particlesCount = 50;
-          const positions = new Float32Array(particlesCount * 3);
-          
-          for(let i = 0; i < particlesCount * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 8;
-          }
-          
-          particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-          const particlesMaterial = new THREE.PointsMaterial({
-            color: 0xffd700,
-            size: 0.05,
-            transparent: true,
-            opacity: 0.8
-          });
-          const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-          scene.add(particles);
-
-          // Page du grimoire (plus grande)
-          const pageGeometry = new THREE.PlaneGeometry(3, 4.3);
-          const canvasTexture = document.createElement("canvas");
-          canvasTexture.width = 800;
-          canvasTexture.height = 1100;
-          const ctx = canvasTexture.getContext("2d");
-
-          const updatePageContent = () => {
-            // Fond parchemin
-            const gradient = ctx.createLinearGradient(0, 0, 0, canvasTexture.height);
-            gradient.addColorStop(0, '#fff8dc');
-            gradient.addColorStop(1, '#f5deb3');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvasTexture.width, canvasTexture.height);
-
-            // Bordure décorative
-            ctx.strokeStyle = '#8b4513';
-            ctx.lineWidth = 4;
-            ctx.strokeRect(30, 30, canvasTexture.width - 60, canvasTexture.height - 60);
-
-            // Titre plus grand
-            ctx.fillStyle = '#4a3728';
-            ctx.font = 'bold 48px serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('À Propos de Moi', canvasTexture.width / 2, 120);
-
-            // Contenu plus lisible
-            ctx.font = '28px serif';
-            ctx.textAlign = 'left';
-            const lines = this.aboutText.split('\n').filter(line => line.trim());
-            let currentY = 200;
-            
-            lines.forEach((line, i) => {
-              const words = line.split(' ');
-              let currentLine = '';
-              
-              words.forEach(word => {
-                const testLine = currentLine + word + ' ';
-                const metrics = ctx.measureText(testLine);
-                if (metrics.width > 700 && currentLine !== '') {
-                  ctx.fillText(currentLine, 70, currentY);
-                  currentLine = word + ' ';
-                  currentY += 35;
-                } else {
-                  currentLine = testLine;
-                }
-              });
-              ctx.fillText(currentLine, 70, currentY);
-              currentY += 80;
-            });
-
-            // Soft skills plus visibles
-            ctx.font = 'italic 24px serif';
-            ctx.fillStyle = '#6b4423';
-            ctx.textAlign = 'center';
-            ctx.fillText(this.softSkills, canvasTexture.width / 2, canvasTexture.height - 100);
-
-            texture.needsUpdate = true;
-          };
-
-          const texture = new THREE.CanvasTexture(canvasTexture);
-          const pageMaterial = new THREE.MeshLambertMaterial({
-            map: texture,
-            side: THREE.DoubleSide,
-            transparent: true
-          });
-
-          const page = new THREE.Mesh(pageGeometry, pageMaterial);
-          page.position.set(-1.6, 0, 0.16);
-          page.rotation.y = Math.PI;
-          page.visible = false;
-          scene.add(page);
-
-          updatePageContent();
-
-          // Gestion des clics
-          const raycaster = new THREE.Raycaster();
-          const mouse = new THREE.Vector2();
-
-          canvas.addEventListener('click', (event) => {
-            if (this.isPageTurning) return;
-
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObject(cover);
-
-            if (intersects.length > 0) {
-              this.isPageTurning = true;
-              this.grimoireOpen = !this.grimoireOpen;
-            }
-          });
-
-          let time = 0;
-          const animate = () => {
-            requestAnimationFrame(animate);
-            time += 0.016;
-
-            // Animation des particules
-            particles.rotation.y += 0.01;
-
-            // Animation de la lumière magique
-            magicLight.intensity = 1 + Math.sin(time * 3) * 0.5;
-
-            // Animation d'ouverture/fermeture
-            if (this.isPageTurning) {
-              if (this.grimoireOpen) {
-                cover.rotation.y += 0.05;
-                if (cover.rotation.y >= Math.PI * 0.8) {
-                  page.visible = true;
-                  if (cover.rotation.y >= Math.PI) {
-                    cover.rotation.y = Math.PI;
-                    this.isPageTurning = false;
-                  }
-                }
-              } else {
-                cover.rotation.y -= 0.05;
-                if (cover.rotation.y <= Math.PI * 0.2) {
-                  page.visible = false;
-                  if (cover.rotation.y <= 0) {
-                    cover.rotation.y = 0;
-                    this.isPageTurning = false;
-                  }
-                }
-              }
-            }
-
-            // Rotation subtile du grimoire
-            if (!this.isPageTurning) {
-              cover.rotation.x = Math.sin(time * 0.5) * 0.1;
-              cover.position.y = Math.sin(time * 0.8) * 0.1;
-            }
-
-            renderer.render(scene, camera);
-          };
-
-          animate();
-        },
-
-        initStars() {
-          const container = document.getElementById("star-container");
-          const tooltip = document.getElementById("tooltip");
-
-          if (!container) return;
-
-          let stars = [];
-          const containerRect = container.getBoundingClientRect();
-
-          // Utiliser les vrais projets au lieu de projets génériques
-          const shuffledProjects = [...this.projects].sort(() => Math.random() - 0.5);
-
-          function createCanvasStar(index) {
-            const size = Math.random() * 15 + 15;
-            const canvas = document.createElement("canvas");
-            canvas.width = canvas.height = size * 2;
-            canvas.className = "star";
-            canvas.style.position = "absolute";
-            canvas.style.pointerEvents = "auto";
-
-            const ctx = canvas.getContext("2d");
-            const center = size;
-            const hue = Math.floor(Math.random() * 360);
-
-            const gradient = ctx.createRadialGradient(center, center, 0, center, center, size);
-            gradient.addColorStop(0, `hsl(${hue}, 100%, 85%)`);
-            gradient.addColorStop(0.5, `hsl(${hue}, 70%, 60%)`);
-            gradient.addColorStop(1, `hsl(${hue}, 40%, 10%)`);
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.moveTo(center, 0);
-            for (let i = 1; i < 8; i++) {
-              const angle = (Math.PI * 2 * i) / 8;
-              ctx.lineTo(center + Math.cos(angle) * size, center + Math.sin(angle) * size);
-            }
-            ctx.closePath();
-            ctx.fill();
-
-            // Limiter les étoiles dans le conteneur fixe
-            const x = Math.random() * (400 - size * 2);
-            const y = Math.random() * (400 - size * 2);
-
-            const velocity = {
-              x: (Math.random() - 0.5) * 0.3,
-              y: (Math.random() - 0.5) * 0.3
-            };
-
-            // Utiliser les vrais projets
-            const project = shuffledProjects[index % shuffledProjects.length];
-
-            container.appendChild(canvas);
-
-            stars.push({
-              canvas,
-              x,
-              y,
-              size,
-              velocity,
-              project,
-            });
-          }
-
-          // Créer moins d'étoiles pour éviter la surcharge
-          for (let i = 0; i < Math.min(15, this.projects.length * 2); i++) {
-            createCanvasStar(i);
-          }
-
-          function animateStars() {
-            stars.forEach((star) => {
-              star.x += star.velocity.x;
-              star.y += star.velocity.y;
-
-              // Rebond dans le conteneur de 400px
-              if (star.x < 0 || star.x > 400 - star.size * 2) star.velocity.x *= -1;
-              if (star.y < 0 || star.y > 400 - star.size * 2) star.velocity.y *= -1;
-
-              star.canvas.style.left = `${star.x}px`;
-              star.canvas.style.top = `${star.y}px`;
-            });
-
-            requestAnimationFrame(animateStars);
-          }
-
-          animateStars();
-
-          // Gestion du hover et des clics
-          container.addEventListener("mousemove", (e) => {
-            const rect = container.getBoundingClientRect();
-            const mx = e.clientX - rect.left;
-            const my = e.clientY - rect.top;
-            let found = false;
-
-            stars.forEach((star) => {
-              const dx = mx - (star.x + star.size);
-              const dy = my - (star.y + star.size);
-              const distance = Math.sqrt(dx * dx + dy * dy);
-
-              if (distance < star.size) {
-                star.canvas.style.transform = "scale(1.4)";
-                star.canvas.style.zIndex = 10;
-                tooltip.style.left = `${e.clientX + 12}px`;
-                tooltip.style.top = `${e.clientY - 12}px`;
-                tooltip.innerHTML = `
-                  <strong>${star.project.title}</strong><br>
-                  ${star.project.description.substring(0, 80)}...<br>
-                  <small>${star.project.technologies.join(", ")}</small>
-                `;
-                tooltip.style.display = "block";
-                found = true;
-              } else {
-                star.canvas.style.transform = "scale(1)";
-                star.canvas.style.zIndex = 1;
-              }
-            });
-
-            if (!found) {
-              tooltip.style.display = "none";
-            }
-          });
-          updateTooltipPosition(event) {
-            this.tooltipX = event.clientX + 10;
-            this.tooltipY = event.clientY - 10;
-          }
-
-          container.addEventListener("click", (e) => {
-            const mx = e.clientX;
-            const my = e.clientY;
-
-            stars.forEach((star) => {
-              const dx = mx - (star.x + star.size);
-              const dy = my - (star.y + star.size);
-              const distance = Math.sqrt(dx * dx + dy * dy);
-
-              if (distance < star.size) {
-                alert(`✨ Interaction avec ${star.project.title} ✨`);
-              }
-            });
-          });
-        }
-
-    }).mount('#app');
-  </script>
-  
-  <style>
-    /* Styles pour les nuages de titres */
-    .cloud-title {
-      width: 300px;
-      height: 200px;
-      background: linear-gradient(135deg, #93c5fd, #3b82f6);
-      border-radius: 50%;
-      position: relative;
-      padding: 15px 30px;
-      animation: float-title 4s ease-in-out infinite;
-      box-shadow:
-        0 8px 25px rgba(255, 255, 255, 0.3),
-        30px 0px #93c5fd,
-        60px 10px #93c5fd,
-        20px 20px #93c5fd,
-        40px 20px #93c5fd;
-    }
-
-    @keyframes float-title {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    .star {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: radial-gradient(circle, #fff 0%, #ffd700 50%, #ff6b35 100%);
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      animation: twinkle 2s infinite alternate;
-      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .star:hover {
-      transform: scale(1.3);
-    }
-
-    @keyframes twinkle {
-      0% { opacity: 0.7; }
-      100% { opacity: 1; }
-    }
-
-
+      </section>
     
-
-  </style>
+    
+  </div>
+</body>
+<footer class="bg-white bg-opacity-10 text-center py-4 mt-10">
+  <p>✨ Portfolio créé avec amour et magie ✨</p>
+</footer>
