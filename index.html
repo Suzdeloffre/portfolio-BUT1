@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Suzanne Deloffre</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="./script.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-indigo-400 to-pink-400 text-white">
+  <div id="app" class="font-sans">
+   
+    <!-- NAVBAR -->
+    <header>
+      <nav class="w-full bg-white bg-opacity-10 backdrop-blur-md shadow-lg fixed top-0 left-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+          <a href="#" class="text-white font-bold text-xl">{{ name }}</a>
+          <ul class="flex space-x-6">
+            <li v-for="(item, index) in navItems" :key="index">
+              <a :href="item.link" class="text-white hover:text-gray-300 transition">{{ item.label }}</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Accueil -->
+    <section class="relative pt-24 px-4 h-screen flex items-center justify-center text-center">
+        <div 
+            class="absolute inset-0 bg-cover bg-center"
+            style="
+                background-image:
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.13), #ac82dfe4),
+                    url('./assets/images/clouds.jpg');">
+        </div>
+        <div class="relative z-10 max-w-xl mx-auto text-gray-700 mt-6 bg-white/50 rounded-xl shadow-lg px-6 py-4">
+            <h1 class="text-4xl font-bold drop-shadow-lg">{{ welcomeTitle }}</h1>
+            <p class="mt-4 text-lg drop-shadow-md">{{ welcomeText }}</p>
+        </div>
+    </section>
+
+    <div class="m-6 p-6">
+    <!-- A propos -->
+    <section class="px-4 py-10" id="about">
+      <div class="flex flex-col lg:flex-row items-center justify-evenly gap-16 mb-8 ml-16">
+        <div class="cloud-title">
+          <h2 class="title ">Apprenez à me connaître !</h2>
+        </div>
+        <div class="flex-1 ">
+          <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+            <p  v-for="(paragraph, index) in aboutText.split('\n\n')" :key="index" class="text-lg leading-relaxed mb-4">
+              {{ paragraph }}
+            </p>        
+            <div class="mt-6 text-center">
+              <p class="text-xl font-medium text-yellow-200">{{ softSkills }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   <!-- Compétences -->
+    <section class="px-4 py-10" id="skills">
+      <div class="flex flex-col lg:flex-row items-center justify-evenly gap-16 mb-8 ml-16">
+        <div class="cloud-title order-1 lg:order-2">
+          <h2 class="title">Voici mes compétences !</h2>
+        </div>
+        <div class="flex-1 justify-evenly content-center grid md:grid-cols-3 gap-6 max-w-4xl order-2 lg:order-1"><div v-for="(skillBlock, index) in skills" :key="index" class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+            <div class="flex justify-center mb-3">
+              <div class="cloud-subtitle">
+                <h3 class="text-xl font-medium text-center text-white">{{ skillBlock.title }}</h3>
+              </div>
+            </div>
+            <ul class="space-y-4">
+              <li v-for="(skill, i) in skillBlock.items" :key="i" class="flex items-center relative group cursor-pointer h-8">
+                <span class="w-2 h-2 bg-white rounded-full mr-3"></span>
+                
+                <!-- Nom de la compétence (disparaît au hover) -->
+                <span class="flex-1 group-hover:opacity-0 transition-opacity duration-300">
+                  {{ typeof skill === 'object' ? skill.name : skill }}
+                </span>
+                
+                <!-- Barre de progression (apparaît au hover à la place du nom) -->
+                <div v-if="typeof skill === 'object'" class="absolute left-5 right-0 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="flex-1 bg-white/20 rounded-full h-2 mr-3">
+                    <div class="progress-bar bg-gradient-to-r from-yellow-400 to-orange-500 h-full rounded-full transition-all duration-1000 ease-out"
+                         :style="{ width: '0%', '--target-width': skill.level + '%' }">
+                    </div>
+                  </div>
+                  <span class="text-xs text-yellow-200 min-w-[35px]">{{ skill.level }}%</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+     <!-- Projets -->
+      <section class="px-4 py-10 relative" id="projects">
+        <div class="flex flex-col lg:flex-row items-center justify-evenly gap-16 mb-8 ml-16">
+          <div class="cloud-title ">
+            <h2 class="title">Découvrez mon travail !</h2>
+          </div>
+          <div class="flex-1">
+            <p class="text-white/80 text-center mt-4">🌟 Survolez les étoiles flottantes pour découvrir mes projets ! 🌟</p>
+            <p class="text-white/80 text-center "> Les rouges contiennent mes compétences. Que la motivation soit avec vous pour lire tout ça !</p>
+            <div class="flex flex-row flex-wrap justify-center  gap-16  mx-auto py-16">
+                <div v-for="(project, index) in projects" 
+                  :key="index"
+                  class="star floating-star"
+                  :class="{ 'star-with-images': project.images && project.images.length > 0 }"
+                  @mouseover="hoveredProject = project; updateTooltipPosition($event)"
+                  @mouseleave="hoveredProject = null"
+                  @click="openProjectModal(project)"
+                  :style="{ 
+                    animationDelay: index * 0.5 + 's'
+                  }">
+                </div>
+              </div>
+          </div>
+        </div>
+        
+       
+        
+        <!-- Infobulle projet -->
+        <div v-if="hoveredProject" 
+            class="fixed bg-white bg-opacity-95 text-black p-4 rounded-lg shadow-xl pointer-events-none z-50 max-w-sm"
+            :style="{ left: tooltipX + 'px', top: tooltipY + 'px' }">
+          <h3 class="font-bold text-lg mb-2">{{ hoveredProject.title }}</h3>
+          <p class="text-sm mb-3">{{ hoveredProject.description }}</p>
+          <div class="flex flex-wrap gap-1 mb-2">
+            <span v-for="tech in hoveredProject.technologies" :key="tech" 
+                  class="bg-indigo-500 text-white px-2 py-1 rounded text-xs">{{ tech }}</span>
+          </div>
+          <p class="text-xs text-gray-600">🖱️ Cliquez pour ouvrir le projet</p>
+        </div>
+        
+        <!-- Modal Projet -->
+        <div v-if="showProjectModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeProjectModal">
+          <div  class="bg-white rounded-2xl p-8 w-[95vw] max-w-[1000px] h-[90vh] max-h-[800px] overflow-y-auto shadow-xl"  @click.stop>
+            <div class="flex justify-between items-start mb-2">
+              <h2 class="text-2xl font-bold text-gray-800">{{ selectedProject?.title }}</h2>
+              <button @click="closeProjectModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+
+            <div v-if="selectedProject?.date" class="mb-4">
+              <p class="text-gray-700">Date : {{ selectedProject.date }}</p>
+            </div>
+            
+
+            <div class="space-y-4 text-gray-700">
+              <p class="text-lg">{{ selectedProject?.description }}</p>
+              
+              <div>
+                <h3 class="font-semibold mb-2">Technologies utilisées :</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span v-for="tech in selectedProject?.technologies" :key="tech" 
+                        class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm">{{ tech }}</span>
+                </div>
+              </div>
+
+              <div v-if="selectedProject?.competence">
+                <h3 class="font-semibold mb-2">Compétences :</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span v-for="comp in selectedProject.competence" :key="comp" 
+                        class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">{{ comp }}</span>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="font-semibold mb-2">Détails du projet :</h3>
+                <!-- tableau -->
+                <div v-if="Array.isArray(selectedProject?.longDescription)">
+                  <p v-for="(paragraph, index) in selectedProject.longDescription" :key="index" class="mb-3">
+                    {{ paragraph }}
+                  </p>
+                </div>
+                <!--  string -->
+                <div v-else>
+                  <p v-for="(paragraph, index) in selectedProject?.longDescription?.split('\n\n')" :key="index" class="mb-3">
+                    {{ paragraph }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Images du projet -->
+              <div v-if="selectedProject?.images && selectedProject.images.length > 0" class="mt-6">
+                <h3 class="font-semibold mb-4">Explication du projet :</h3>
+                <div class="space-y-6">
+                  <div v-for="(image, index) in selectedProject.images"  :key="index"  class="border rounded-lg p-4 bg-gray-50" >
+                    <figure class="flex flex-col items-center">
+                      <img :src="image.src"  :alt="image.alt"  class="w-full max-w-2xl mx-auto rounded-lg shadow-md mb-3"/>
+                      <figcaption class="text-sm text-gray-600 text-center mb-4">
+                        {{ image.caption }}
+                      </figcaption>
+                    </figure>
+              
+                    <div>
+                      <p  v-for="(paragraph, index) in image.description.split('\n\n')" :key="index" class="mb-3 whitespace-pre-line" >
+                        {{ paragraph }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+              <button v-if="selectedProject?.url"
+                      @click="openInNewTab(selectedProject.url)"
+                      class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded transition">
+                Voir le code
+              </button>
+              
+              <button v-if="selectedProject?.demo"
+                      @click="openInNewTab(selectedProject.demo)"
+                      class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition">
+                🚀 Voir la démo
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+    
+  </div>
+</body>
+<footer class="bg-white bg-opacity-10 text-center py-4 mt-10">
+  <p>✨ Portfolio créé avec amour et magie ✨</p>
+</footer>
