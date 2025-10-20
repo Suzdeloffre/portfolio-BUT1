@@ -47,7 +47,7 @@
     <section class="px-4 py-10" id="about">
       <div class="flex flex-col lg:flex-row items-center justify-evenly gap-16 mb-8 ml-16">
         <div class="cloud-title">
-          <h2 class="title ">Apprenez à me connaître !</h2>
+          <h2 class="title ">How to know me !</h2>
         </div>
         <div class="flex-1 ">
           <div class="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
@@ -66,7 +66,7 @@
     <section class="px-4 py-10" id="skills">
       <div class="flex flex-col lg:flex-row items-center justify-evenly gap-16 mb-8 ml-16">
         <div class="cloud-title order-1 lg:order-2">
-          <h2 class="title">Voici mes compétences !</h2>
+          <h2 class="title">My skills are here !</h2>
         </div>
         <div class="flex-1 justify-evenly content-center grid md:grid-cols-3 gap-6 max-w-4xl order-2 lg:order-1"><div v-for="(skillBlock, index) in skills" :key="index" class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
             <div class="flex justify-center mb-3">
@@ -102,11 +102,11 @@
       <section class="px-4 py-10 relative" id="projects">
         <div class="flex flex-col lg:flex-row items-center justify-evenly gap-16 mb-8 ml-16">
           <div class="cloud-title ">
-            <h2 class="title">Découvrez mon travail !</h2>
+            <h2 class="title">It's my work !</h2>
           </div>
           <div class="flex-1">
-            <p class="text-white/80 text-center mt-4">🌟 Survolez les étoiles flottantes pour découvrir mes projets ! 🌟</p>
-            <p class="text-white/80 text-center "> Les rouges contiennent mes compétences. Que la motivation soit avec vous pour lire tout ça !</p>
+            <p class="text-white/80 text-center mt-4">🌟 Hover over the floating stars to discover my projects! 🌟</p>
+            <p class="text-white/80 text-center "> The red ones contain my skills. May motivation be with you to read all this!</p>
             <div class="flex flex-row flex-wrap justify-center  gap-16  mx-auto py-16">
                 <div v-for="(project, index) in projects" 
                   :key="index"
@@ -135,7 +135,7 @@
             <span v-for="tech in hoveredProject.technologies" :key="tech" 
                   class="bg-indigo-500 text-white px-2 py-1 rounded text-xs">{{ tech }}</span>
           </div>
-          <p class="text-xs text-gray-600">🖱️ Cliquez pour ouvrir le projet</p>
+          <p class="text-xs text-gray-600">🖱️ Click to open the project</p>
         </div>
         
         <!-- Modal Projet -->
@@ -155,7 +155,7 @@
               <p class="text-lg">{{ selectedProject?.description }}</p>
               
               <div>
-                <h3 class="font-semibold mb-2">Technologies utilisées :</h3>
+                <h3 class="font-semibold mb-2">Technologies used :</h3>
                 <div class="flex flex-wrap gap-2">
                   <span v-for="tech in selectedProject?.technologies" :key="tech" 
                         class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm">{{ tech }}</span>
@@ -163,7 +163,7 @@
               </div>
 
               <div v-if="selectedProject?.competence">
-                <h3 class="font-semibold mb-2">Compétences :</h3>
+                <h3 class="font-semibold mb-2">Skills :</h3>
                 <div class="flex flex-wrap gap-2">
                   <span v-for="comp in selectedProject.competence" :key="comp" 
                         class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">{{ comp }}</span>
@@ -171,7 +171,7 @@
               </div>
               
               <div>
-                <h3 class="font-semibold mb-2">Détails du projet :</h3>
+                <h3 class="font-semibold mb-2">Project's details :</h3>
                 <!-- tableau -->
                 <div v-if="Array.isArray(selectedProject?.longDescription)">
                   <p v-for="(paragraph, index) in selectedProject.longDescription" :key="index" class="mb-3">
@@ -188,7 +188,7 @@
 
               <!-- Images du projet -->
               <div v-if="selectedProject?.images && selectedProject.images.length > 0" class="mt-6">
-                <h3 class="font-semibold mb-4">Explication du projet :</h3>
+                <h3 class="font-semibold mb-4">Project's explanations :</h3>
                 <div class="space-y-6">
                   <div v-for="(image, index) in selectedProject.images"  :key="index"  class="border rounded-lg p-4 bg-gray-50" >
                     <figure class="flex flex-col items-center">
@@ -228,5 +228,5 @@
   </div>
 </body>
 <footer class="bg-white bg-opacity-10 text-center py-4 mt-10">
-  <p>✨ Portfolio créé avec amour et magie ✨</p>
+  <p>✨ Portfolio created with love and magic ✨</p>
 </footer>
