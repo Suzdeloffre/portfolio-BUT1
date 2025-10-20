@@ -125,8 +125,8 @@ createApp({
 				"date": "June 2025",
 				"description": "Interactive portfolio using Three.js to create immersive experiences.",
 				"technologies": ["Vue.js", "HTML", "CSS","Tailwind CSS"],
-				"competence": ["Web development", "3D modeling", "Interactive design"],
-				"longDescription": "This personal portfolio represents my skills acquired in the first year of Computer Science degree. It uses modern technologies like Vue.js for interface reactivity, and Tailwind CSS for modern and responsive design. The project highlights my academic projects through a playful interface with floating stars. It's a project that combines creativity and technique to offer a unique user experience.",
+				"competence": ["Web development", "Interactive design"],
+				"longDescription": "This personal portfolio represents my skills acquired in the first year of Computer Science degree. The project highlights my academic projects through a playful interface with floating stars. It's a project that combines creativity and technique to offer a unique user experience.",
 				"url": "https://github.com"
 			},
 			{
