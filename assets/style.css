@@ -13,23 +13,23 @@
 
 .cloud-title {
 	width: 260px;
-	height: 120px;
+	height: 110px;
 	background: linear-gradient(135deg, #ffc6f1, #ffc6f1);
 	border-radius: 50%;
 	position: relative;
 	padding: 15px 30px;
 	animation: float-title 4s ease-in-out infinite;
 	box-shadow:
-	0 8px 25px rgba(255, 255, 255, 0.1),
+	0 8px 15px rgba(255, 255, 255, 0.1),
 	35px -20px #ffc6f1b2,
 	80px 10px #ffc6f1d8,
-	35px 20px #ffc6f196,
-	-80px 15px #ffc6f1c7,
+	35px 10px #ffc6f196,
+	-70px 15px #ffc6f1c7,
 	-45px -25px #ffc6f1c7,
-	-5px -40px #ffc6f1c6,
-	-20px -25px #ffc6f1c7,
-	-50px 20px #ffc6f1c7,
-	30px 40px #ffc6f1c6;
+	-5px -30px #ffc6f1c6,
+	-20px -15px #ffc6f1c7,
+	-50px 10px #ffc6f1c7,
+	30px 20px #ffc6f1c6;
 }
 
 @keyframes float-title {
