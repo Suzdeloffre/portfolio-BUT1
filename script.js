@@ -54,7 +54,8 @@ createApp({
 				"technologies": ["HTML", "CSS", "GitHub"],
 				"competence": ["S1.06 - Discovery of economic and ecological environment", "S1.05 - Requirements gathering"],
 				"longDescription": "The Alten presentation website was our very first project at the beginning of the year. It involved creating a simple website using HTML and CSS. This website had to be responsive, meaning capable of automatically adapting to different screens, such as those of a phone, tablet, or computer.\n\nThe objective wasn't only technical. This project also mixed economic concepts to help us better understand how a real company operates. We therefore studied Alten from several angles: its history, activity, and market position. In addition to the website, we had to write an economic report and design questionnaires to imagine the needs of a fictional client, as would be done in a real professional project.\n\nThis project allowed us to discover the basics of project management: how to distribute tasks within a group, organize efficiently, and meet deadlines. We also learned to use Git, a collaborative work tool widely used to keep track of modifications in a project. Since it was our first time with this tool, it was a real challenge, but also an important step in our learning.",
-				"url": "https://pchassig.github.io/Presentation-Alten/index.html"
+				"url":"https://github.com/pchassig/Presentation-Alten",
+				"demo": "https://pchassig.github.io/Presentation-Alten/index.html"
 			},
 			{
 				"title": "Chausson Della Famiglia",
@@ -63,7 +64,8 @@ createApp({
 				"technologies": ["HTML", "CSS"],
 				"competence": ["Web development", "Advanced CSS"],
 				"longDescription": "As part of a course, we were asked, in groups, to create a non-functional e-commerce website on a theme of our choice, with the goal of demonstrating our CSS and aesthetic skills. I created the 'About' page. This project allowed me to deepen my knowledge in layout and responsive design.",
-				"url": "https://ethanchevrand.github.io/ecommerce_chaussons/pages/apropos.html"
+				"url":"https://github.com/EthanCHEVRAND/ecommerce_chaussons",
+				"demo": "https://ethanchevrand.github.io/ecommerce_chaussons/pages/apropos.html"
 			},
 			{
 				"title": "Trida Maintenance",
@@ -127,7 +129,7 @@ createApp({
 				"technologies": ["Vue.js", "HTML", "CSS","Tailwind CSS"],
 				"competence": ["Web development", "Interactive design"],
 				"longDescription": "This personal portfolio represents my skills acquired in the first year of Computer Science degree. The project highlights my academic projects through a playful interface with floating stars. It's a project that combines creativity and technique to offer a unique user experience.",
-				"url": "https://github.com"
+				"url": "https://github.com/Suzdeloffre/portfolio-BUT1"
 			},
 			{
 				"title": "Quixo",
