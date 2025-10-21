@@ -10,7 +10,7 @@ createApp({
 			{ "label": "Projects", "link": "#projects" }
 		],
 		"welcomeTitle": "Welcome to my portfolio, ",
-		"welcomeText": "the digital universe of a first-year Computer Science student",
+		"welcomeText": "the digital universe of a second-year Computer Science student",
 		"aboutText": "My path has been anything but linear: it's a quest for identity, a passage to adulthood as tumultuous as it is enriching. My adventure began in the bustling city of Lyon, where I started studying management and economics. Then, a return to my roots became necessary—toward my deepest passions: culture and literature.\n\nThat's where I encountered Balzac, whose dense and almost soporific style was a real challenge. Yet, this immersion in literary complexity brought me patience, rigor, and analytical skills.\n\nBut the quest didn't stop there. It carried me into the intense world of luxury hospitality, another school of life where adaptability and discipline are essential. I obtained my diploma at the Cours Hôtelier de Besançon.\n\nA side quest then led me to an unexpected but decisive place: the Career Information Center of Besançon. Taken in by its director, I spent nearly a year modernizing the computer interface of public computers, while also handling reception and secretarial duties. These responsibilities allowed me to reconnect with an essential part of myself.\n\nEvery adversity, every encounter, every detour allowed me to collect pieces of a puzzle—and they all pointed in the same direction: computer science.\n\nToday, in this ever-evolving digital world, I chart my course at the crossroads of creativity and logic. Each line of code is an incantation, each project a quest to accomplish.",
 		"softSkills": "✨ Teamwork • Creativity • Adaptability • Curiosity ✨",
 		"skills": [
@@ -146,8 +146,32 @@ createApp({
 						"description": "This figure (5) shows a test class written in Java. Its purpose is to verify that the QuixoStageFactory class works correctly. This QuixoStageFactory class is used to initialize all elements of the Quixo game, like the 5x5 square board and symbol dice (cross, circle, or neutral). It inherits from a class provided by the Boardifier graphics framework, meaning it takes the general behavior of an existing class but adds or modifies certain specific functions to adapt to the Quixo game. The test class uses JUnit, a tool for automated testing. These tests allow automatically verifying that the program works as expected. We also find Mockito, a tool used to create fake objects (called mocks) to simulate certain program parts without actually executing them.\n\nThe program relies on object-oriented architecture, with a class inheritance system from the Boardifier framework. This means our own classes (notably controllers) are closely linked to framework classes, which makes classic tests more delicate to perform. Indeed, when a class strongly depends on other classes, it becomes difficult to test it in isolation without external behaviors influencing results.\n\nTo solve this problem, we used Mockito. Thanks to these dummy objects, we were able to isolate the class we wanted to test, here QuixoStageFactory, by simulating behaviors of classes it depends on, like the StageModel class.\n\nThe logic behind our tests was centered on verifying program behavior, by defining in advance what we expected as a result. For example, we decided that when asking the StageModel who the current player is, it should return 'player 1'. This behavior was simulated using Mockito.\n\nThen, we tested that the setup method of the QuixoStageFactory class properly initialized game elements, particularly by verifying at the test's end that 25 dice (one for each board square) had indeed been created.\n\nHowever, our test logic mainly relied on expecting predefined results, without necessarily going as far as an in-depth code analysis. In other words, we mainly verified if the program reacted correctly in concrete situations, but without systematically covering all code possibilities.\n\nConsequently, some classes lack complete verification of all possible execution cases. We rather adopted an empirical approach, imagining different errors a user could make, then testing if clear error messages were properly returned.\n\nFor example, we verified program behavior when a player selects a square outside the grid, or when trying to play a die belonging to their opponent. These tests are useful for guaranteeing good user experience, but they don't replace complete test coverage based on code structure, since some behaviors and methods have no influence on the visible interface."
 					}
 				],
-				"url": "https://github.com"
+				
 			}
+
+			{
+				"title": "VérifEtiquette",
+				"date": "September to October 2025",
+				"description": "Simple barcode label double-verification program using a barcode scanner for a biobank.",
+				"technologies": ["PowerShell"],
+				"longDescription": "This PowerShell program helps secure and simplify the process of verifying and labeling biological sample vials (called 'paillette') in a biobank, where blood donation samples are stored in liquid nitrogen.\n\nThe program first requests the technician's validation code (visa), then the request form barcode. Once validated, a label is automatically printed and attached to the sample tube. Afterward, the program verifies that the barcodes of all paillettes match the label and the form code.\n\nEvery action and event (errors, restarts, confirmations, etc.) is logged in a trace file for quality control and audit purposes.\n\nThe system ensures that all scanned codes correspond correctly, preventing human errors during the cryogenic sample decanting process. It also provides real-time visual feedback (color-coded messages) and automatic program termination when all checks are successful.\n",
+				"images": [
+					{
+						"src": "./assets/images/verifetiquette_code.jpg",
+						"alt": "Figure 6: Verification of paillette's barcodes",
+						"caption": "Figure 6: Verification of paillette's barcodes",
+						"description": "This figure (6) shows a clean, event-driven implementation using the `TextChanged` event. It efficiently handles automatic scanning, input validation, and error feedback through clear UI messages and color changes.\n\n"
+					}
+				], [
+					{
+						"src": "./assets/images/verifetiquette_trace.jpg",
+						"alt": "Figure 7: Logs of the VerifEtiquette's program",
+						"caption": "Figure 7: Logs of the VerifEtiquette's program",
+						"description": "This figure (7)  The first figure (trace file) demonstrates that the verification process is fully automated and logged. It shows clear tracking of each step: visa validation, barcode checks, errors, and final success.\n"
+					}
+				],
+			}
+			  
 		],
 		
 		hoveredProject: null,
