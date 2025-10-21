@@ -147,7 +147,7 @@ createApp({
 					}
 				],
 				
-			}
+			},
 
 			{
 				"title": "VérifEtiquette",
