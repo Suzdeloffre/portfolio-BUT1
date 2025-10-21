@@ -161,8 +161,7 @@ createApp({
 						"alt": "Figure 6: Verification of paillette's barcodes",
 						"caption": "Figure 6: Verification of paillette's barcodes",
 						"description": "This figure (6) shows a clean, event-driven implementation using the `TextChanged` event. It efficiently handles automatic scanning, input validation, and error feedback through clear UI messages and color changes.\n\n"
-					}
-				], [
+					},
 					{
 						"src": "./assets/images/verifetiquette_trace.jpg",
 						"alt": "Figure 7: Logs of the VerifEtiquette's program",
