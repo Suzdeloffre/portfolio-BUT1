@@ -21,6 +21,7 @@ createApp({
 					{name:"HTML",level : 90},
 					{name:"CSS",level : 70},
 					{name:"JavaScript",level : 45},
+					{name:"PowerShell",level : 40},
 					{name:"Python",level : 30},
 					{name:"C",level : 40}
 				]
